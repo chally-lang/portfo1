@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import {
   CalendarIcon,
@@ -14,7 +14,7 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
-import { useUser } from '@clerk/nextjs'
+import Image from 'next/image'
 
 interface BlogPost {
   id: string
@@ -50,7 +50,7 @@ export default function BlogPage() {
 
   useEffect(() => {
     filterAndPaginatePosts()
-  }, [allPosts, selectedTag, searchQuery, currentPage])
+  }, [filterAndPaginatePosts])
 
   const fetchBlogPosts = async () => {
     try {
@@ -67,7 +67,7 @@ export default function BlogPage() {
     }
   }
 
-  const filterAndPaginatePosts = () => {
+  const filterAndPaginatePosts = useCallback(() => {
     let filtered = allPosts
 
     // Filter by tag
@@ -90,7 +90,7 @@ export default function BlogPage() {
     const startIndex = (currentPage - 1) * postsPerPage
     const endIndex = startIndex + postsPerPage
     setPosts(filtered.slice(startIndex, endIndex))
-  }
+  }, [allPosts, selectedTag, searchQuery, currentPage, postsPerPage])
 
   const handleTagChange = (tag: string) => {
     setSelectedTag(tag)
@@ -212,7 +212,7 @@ export default function BlogPage() {
           >
             {post.coverImage && (
               <div className="aspect-video overflow-hidden">
-                <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src={post.coverImage} alt={post.title} width={400} height={225} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>
             )}
 

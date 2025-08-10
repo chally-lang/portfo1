@@ -346,7 +346,7 @@ export default function SendNewsletterPage() {
               <li>• Write engaging, personal content</li>
               <li>• Include a clear call-to-action</li>
               <li>• Test your content before sending</li>
-              <li>• Consider your audience's timezone</li>
+              <li>• Consider your audience&apos;s timezone</li>
             </ul>
           </motion.div>
         </div>

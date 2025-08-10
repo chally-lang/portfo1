@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const { subject, content, htmlContent } = await req.json();
+    const { subject, content } = await req.json();
 
     if (!subject || !content) {
       return new Response(JSON.stringify({ error: "Subject and content are required" }), { 

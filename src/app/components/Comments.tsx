@@ -30,24 +30,24 @@ export default function Comments({ postId }: CommentsProps) {
   const { isSignedIn, user } = useUser();
 
   useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(`/api/comments?postId=${postId}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch comments')
+        }
+        const data = await response.json()
+        setComments(data.comments)
+      } catch (error) {
+        console.error('Error fetching comments:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
     fetchComments()
   }, [postId])
-
-  const fetchComments = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch(`/api/comments?postId=${postId}`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch comments')
-      }
-      const data = await response.json()
-      setComments(data.comments)
-    } catch (error) {
-      console.error('Error fetching comments:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

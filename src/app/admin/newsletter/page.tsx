@@ -4,8 +4,7 @@ import { motion } from 'framer-motion'
 import { 
   TrashIcon, 
   UserGroupIcon,
-  CheckIcon,
-  XMarkIcon
+  CheckIcon
 } from '@heroicons/react/24/outline'
 
 interface NewsletterSubscriber {

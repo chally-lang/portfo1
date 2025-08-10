@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useParams } from 'next/navigation'
 import { CalendarIcon, ClockIcon, UserIcon, TagIcon, HeartIcon, BookmarkIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import Image from 'next/image'
 import Comments from '../../components/Comments'
 import { useUser } from '@clerk/nextjs';
 
@@ -30,31 +31,31 @@ export default function BlogPostDetail() {
   const [bookmarked, setBookmarked] = useState(false);
 
   useEffect(() => {
+    const fetchBlogPost = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch('/api/blogs')
+        if (!response.ok) {
+          throw new Error('Failed to fetch blog posts')
+        }
+        const data = await response.json()
+        const decodedId = decodeURIComponent(params.id as string)
+        const foundPost = data.posts.find((p: BlogPost) => p.id === decodedId)
+        
+        if (foundPost) {
+          setPost(foundPost)
+        } else {
+          setError('Blog post not found')
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred')
+      } finally {
+        setLoading(false)
+      }
+    }
+    
     fetchBlogPost()
   }, [params.id])
-
-  const fetchBlogPost = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch('/api/blogs')
-      if (!response.ok) {
-        throw new Error('Failed to fetch blog posts')
-      }
-      const data = await response.json()
-      const decodedId = decodeURIComponent(params.id as string)
-      const foundPost = data.posts.find((p: BlogPost) => p.id === decodedId)
-      
-      if (foundPost) {
-        setPost(foundPost)
-      } else {
-        setError('Blog post not found')
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -188,9 +189,11 @@ export default function BlogPostDetail() {
             transition={{ delay: 0.2 }}
             className="mb-8"
           >
-            <img
+            <Image
               src={post.coverImage}
               alt={post.title}
+              width={800}
+              height={400}
               className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
             />
           </motion.div>

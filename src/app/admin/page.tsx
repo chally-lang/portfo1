@@ -46,7 +46,7 @@ export default function AdminDashboard() {
 
       setStats({
         comments: commentsData.comments?.length || 0,
-        pendingComments: commentsData.comments?.filter((c: any) => !c.approved)?.length || 0,
+        pendingComments: commentsData.comments?.filter((c: { approved?: boolean }) => !c.approved)?.length || 0,
         contactMessages: contactData.messages?.length || 0,
         newsletterSubscribers: contactData.subscribers?.length || 0
       })
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
       >
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Admin Dashboard</h1>
         <p className="text-gray-600 dark:text-gray-300">
-          Welcome back! Here's an overview of your portfolio management.
+          Welcome back! Here&apos;s an overview of your portfolio management.
         </p>
       </motion.div>
 

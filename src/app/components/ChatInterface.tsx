@@ -114,7 +114,7 @@ export default function ChatInterface() {
         {messages.length === 0 && (
           <div className="text-center text-gray-500 mt-8">
             <Bot className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-            <p className="text-lg mb-2">👋 Hi! I'm your AI assistant</p>
+            <p className="text-lg mb-2">👋 Hi! I&apos;m your AI assistant</p>
             <p className="text-sm">Ask me anything about projects, skills, or schedule a consultation!</p>
           </div>
         )}

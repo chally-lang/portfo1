@@ -22,7 +22,7 @@ export async function GET(req: Request) {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching conversation history:", error);
     return new Response(
       JSON.stringify({ error: "Failed to fetch conversation history" }),

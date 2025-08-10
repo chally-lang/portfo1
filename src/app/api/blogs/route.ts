@@ -15,6 +15,35 @@ interface BlogPost {
   source: string;
 }
 
+interface HashnodePost {
+  slug?: string;
+  title?: string;
+  brief?: string;
+  dateAdded?: string;
+  author?: { name?: string };
+  tags?: { name?: string }[];
+  coverImage?: string;
+  readTime?: number;
+  content?: string;
+}
+
+interface DevToPost {
+  id: number;
+  title?: string;
+  description?: string;
+  url?: string;
+  canonical_url?: string;
+  published_at?: string;
+  created_at?: string;
+  user?: { name?: string; username?: string };
+  tags?: string[];
+  tag_list?: string[];
+  cover_image?: string;
+  social_image?: string;
+  reading_time_minutes?: number;
+  reading_time?: number;
+}
+
 /** -------------------------
  * Hashnode (GraphQL) fetch
  * ------------------------- */
@@ -67,16 +96,16 @@ async function fetchHashnodePosts(limit = 6): Promise<BlogPost[]> {
 
     const json = await res.json().catch(() => ({}));
     const publicationEdge = json?.data?.user?.publications?.edges?.[0]?.node;
-    const postsRaw = publicationEdge?.posts?.edges?.map((edge: any) => edge.node) || [];
+    const postsRaw = publicationEdge?.posts?.edges?.map((edge: { node: HashnodePost }) => edge.node) || [];
 
-    return (postsRaw as any[]).slice(0, limit).map((p) => ({
+    return postsRaw.slice(0, limit).map((p: HashnodePost) => ({
       id: `hashnode-${p.slug ?? Math.random().toString(36).slice(2)}`,
       title: p.title ?? "Untitled",
       description: p.brief ?? "",
       url: p.slug ? `https://${username}.hashnode.dev/${p.slug}`.replace(/\/\/+/, "//") : "#",
       publishedAt: p.dateAdded ?? new Date().toISOString(),
       author: p.author?.name ?? username,
-      tags: Array.isArray(p.tags) ? p.tags.map((t: any) => t?.name).filter(Boolean) : [],
+      tags: Array.isArray(p.tags) ? p.tags.map((t) => t?.name).filter(Boolean) : [],
       coverImage: p.coverImage ?? null,
       readTime: p.readTime ?? undefined,
       body_html: p.content ?? undefined,
@@ -107,7 +136,7 @@ async function fetchDevToPosts(): Promise<BlogPost[]> {
 
           if (!res.ok) return;
 
-          const articles = (await res.json()) as any[];
+          const articles = (await res.json()) as DevToPost[];
           (articles || []).slice(0, 8).forEach((a) => {
             all.push({
               id: `devto-${a.id}`,

@@ -8,7 +8,10 @@
   ],
   "functions": {
     "src/app/api/**/*.ts": {
-      "maxDuration": 10
+      "maxDuration": 30
     }
+  },
+  "env": {
+    "NEXT_RUNTIME": "nodejs"
   }
 }

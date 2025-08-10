@@ -4,9 +4,15 @@ import prisma from "@/lib/prisma";
 export const runtime = "nodejs";
 
 // Enhanced intent detection and entity extraction
+interface MessageEntities {
+  email?: string;
+  phone?: string;
+  company?: string;
+}
+
 function analyzeMessage(message: string) {
   const lowerMessage = message.toLowerCase();
-  const entities: any = {};
+  const entities: MessageEntities = {};
   
   // Email extraction
   const emailMatch = message.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
@@ -40,8 +46,13 @@ function analyzeMessage(message: string) {
   return { intent, entities };
 }
 
+interface ConversationMessage {
+  role: string;
+  message: string;
+}
+
 // Enhanced intelligent response system using only Groq
-async function generateGroqResponse(message: string, conversationHistory: any[] = []): Promise<string> {
+async function generateGroqResponse(message: string, conversationHistory: ConversationMessage[] = []): Promise<string> {
   try {
     // Prepare the conversation context for Groq
     const systemPrompt = `You are an AI Assistant for a skilled full-stack developer specializing in Software Engineering | Full Stack Developer | Mobile App Developer | n8n AI Automations | Database Management | API Optimization | UI/UX Enthusiast | Open Source Contributor ,React, MERCN STACK, Next.js, TypeScript, and modern Web/Mobile development. 
@@ -65,7 +76,7 @@ Always be professional, enthusiastic, and focus on how the developer can solve t
 
     const messages = [
       { role: "system", content: systemPrompt },
-      ...conversationHistory.slice(-6).map((msg: any) => ({
+      ...conversationHistory.slice(-6).map((msg) => ({
         role: msg.role === "user" ? "user" : "assistant",
         content: msg.message
       })),
@@ -308,7 +319,7 @@ What specific information can I provide about their work or availability?`;
 
 export async function POST(req: Request) {
   try {
-    const { message, clientData } = await req.json();
+    const { message } = await req.json();
     if (!message || typeof message !== "string") {
       return new Response(JSON.stringify({ error: "Message is required" }), { status: 400 });
     }
