@@ -1,17 +1,7 @@
-# Devfolio
+# CharlesTech
 
-Devfolio is a portfolio website built using Next.js, Tailwind CSS, and Framer Motion. It allows developers to showcase their projects, skills, and blogs in a visually appealing manner.
+CharlesTech is a portfolio website Rendering My Works , skills & Projects aas as a fullstack Software Dev, this webiste is built using Next.js, Tailwind CSS, and Framer Motion. It allows developers to showcase their projects, skills, and blogs in a visually appealing manner.
 
-## Table of Contents
-
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Animations](#animations)
-- [Components](#components)
-- [Types](#types)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -23,13 +13,13 @@ Devfolio is a portfolio website built using Next.js, Tailwind CSS, and Framer Mo
 
 ## Installation
 
-To get started with Devfolio, follow these steps:
+To get started with CharlesTech, follow these steps:
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/devfolio.git
-   cd devfolio
+   git clone https://github.com/yourusername/CharlesTech.git
+   cd CharlesTech
    ```
 
 2. **Install the dependencies:**
@@ -67,7 +57,7 @@ To get started with Devfolio, follow these steps:
    ```
 
 ## Usage
-The Devfolio project is structured to be intuitive and easy to navigate.
+The CharlesTech project is structured to be intuitive and easy to navigate.
 
-By understanding the structure and components of Devfolio, you can easily customize and extend the project to fit your needs.
+By understanding the structure and components of CharlesTech, you can easily customize and extend the project to fit your needs.
 

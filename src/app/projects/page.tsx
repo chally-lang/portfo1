@@ -2,7 +2,8 @@
 
 import { projects } from '@/contents/projects'
 import Image from 'next/image'
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaGithub } from 'react-icons/fa'
+// import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { fadeInUp, staggerContainer, cardHoverSmall } from '@/utils/animations'
 
@@ -105,7 +106,7 @@ export default function Projects() {
                   <FaGithub className="h-5 w-5" />
                   <span>Code</span>
                 </motion.a>
-                <motion.a
+                {/* <motion.a
                   href={project.demoLink}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -115,7 +116,7 @@ export default function Projects() {
                 >
                   <FaExternalLinkAlt className="h-5 w-5" />
                   <span>Live Demo</span>
-                </motion.a>
+                </motion.a> */}
               </motion.div>
             </div>
           </motion.div>

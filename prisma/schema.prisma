@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  subscribedAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String?
+  techStack     String[] // Postgres array
+  githubLink    String?
+  liveDemoLink  String?
+  dateCompleted DateTime?
+}
+
+model FAQ {
+  id       Int     @id @default(autoincrement())
+  question String
+  answer   String
+}
+
+model Conversation {
+  id        Int      @id @default(autoincrement())
+  sessionId String
+  role      String   // "user" or "assistant"
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([createdAt])
+}
+
+

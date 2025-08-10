@@ -13,6 +13,8 @@
 # testing
 /coverage
 
+/.zencoder/
+
 # next.js
 /.next/
 /out/

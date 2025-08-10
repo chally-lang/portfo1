@@ -20,10 +20,12 @@ export default function Contact() {
     message: ''
   })
   const [status, setStatus] = useState<FormStatus>('idle')
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('loading')
+    setErrorMessage('')
 
     try {
       const response = await fetch('/api/contact', {
@@ -34,12 +36,17 @@ export default function Contact() {
         body: JSON.stringify(formData),
       })
 
-      if (!response.ok) throw new Error('Failed to send message')
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
       
       setStatus('success')
       setFormData({ name: '', email: '', message: '' })
-    } catch {
+    } catch (error) {
       setStatus('error')
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to send message. Please try again.')
     }
   }
 
@@ -66,8 +73,8 @@ export default function Contact() {
           {...slideInLeft}
         >
           <motion.div {...fadeInUp}>
-            <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
-            <p className="text-secondary">
+            <h2 className="text-2xl font-semibold mb-4 text-teal-200">Get in Touch</h2>
+            <p className="text-text-white">
               I&apos;m always open to discussing new projects, creative ideas, or
               opportunities to be part of your visions.
             </p>
@@ -87,9 +94,9 @@ export default function Contact() {
             >
               <FaEnvelope className="h-6 w-6 text-primary" />
               <div>
-                <h3 className="font-semibold">Email</h3>
-                <a href="mailto:your.email@example.com" className="text-secondary hover:text-primary">
-                  your.email@example.com
+                <h3 className="font-semibold text-teal-300">Email</h3>
+                <a href="mailto:young4orch@gmail.com" className="text-white hover:text-primary">
+                  young4orch@gmail.com
                 </a>
               </div>
             </motion.div>
@@ -102,9 +109,9 @@ export default function Contact() {
             >
               <FaPhone className="h-6 w-6 text-primary" />
               <div>
-                <h3 className="font-semibold">Phone</h3>
-                <a href="tel:+1234567890" className="text-secondary hover:text-primary">
-                  +1 (234) 567-890
+                <h3 className="font-semibold text-teal-300">Phone</h3>
+                <a href="tel:+2347033085090" className="text-white hover:text-primary">
+                  +234 07033085090
                 </a>
               </div>
             </motion.div>
@@ -117,8 +124,8 @@ export default function Contact() {
             >
               <FaMapMarkerAlt className="h-6 w-6 text-primary" />
               <div>
-                <h3 className="font-semibold">Location</h3>
-                <p className="text-secondary">San Francisco, CA</p>
+                <h3 className="font-semibold text-teal-300">Location</h3>
+                <p className="text-white">Lagos/Nigeria</p>
               </div>
             </motion.div>
           </motion.div>
@@ -207,7 +214,7 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                Failed to send message. Please try again.
+                {errorMessage || 'Failed to send message. Please try again.'}
               </motion.p>
             )}
           </motion.form>

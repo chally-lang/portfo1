@@ -15,7 +15,7 @@ export default function About() {
   return (
     <div className="container max-w-7xl mx-auto py-12">
       <motion.h1 
-        className="text-4xl font-bold mb-8 text-center"
+        className="text-4xl font-bold mb-8 text-center text-teal-300"
         {...fadeInDown}
       >
         About Me
@@ -26,10 +26,10 @@ export default function About() {
         className="mb-16"
         {...fadeInUp}
       >
-        <p className="text-lg text-secondary max-w-3xl mx-auto text-center">
-          I&apos;m a passionate Full Stack Developer with expertise in building modern web applications.
-          With a strong foundation in both frontend and backend technologies, I create seamless
-          user experiences and robust server-side solutions.
+        <p className="text-lg text-white max-w-3xl mx-auto text-center">
+          I&apos;m a passionate Full Stack Developer with expertise in building modern web/mobile applications.
+          With a strong foundation in both frontend and backend technologies, Also, I create and design Automation Workflows & build Ai Agents, I create seamless
+          user experiences and robust server-side solutions. Ready to leverage My skills and work with your Organization/Team to build unique scalable application
         </p>
       </motion.section>
 
@@ -40,7 +40,7 @@ export default function About() {
         transition={{ delay: 0.2 }}
       >
         <motion.h2 
-          className="section-title"
+          className="section-title text-teal-300"
           {...fadeInUp}
         >
           Skills
@@ -63,6 +63,7 @@ export default function About() {
               <li>TypeScript</li>
               <li>Tailwind CSS</li>
               <li>HTML5 / CSS3</li>
+              <li>Vue</li>
             </ul>
           </motion.div>
           
@@ -76,6 +77,7 @@ export default function About() {
             <ul className="text-secondary space-y-2">
               <li>Node.js</li>
               <li>Express</li>
+              <li>Laravel/Codeigniter</li>
               <li>PostgreSQL</li>
               <li>MongoDB</li>
             </ul>
@@ -93,6 +95,7 @@ export default function About() {
               <li>Docker</li>
               <li>AWS</li>
               <li>CI/CD</li>
+              <li>n8n Agent Automations</li>
             </ul>
           </motion.div>
         </motion.div>
@@ -105,7 +108,7 @@ export default function About() {
         transition={{ delay: 0.4 }}
       >
         <motion.h2 
-          className="section-title"
+          className="section-title text-teal-300"
           {...fadeInUp}
         >
           Experience
@@ -152,7 +155,7 @@ export default function About() {
         transition={{ delay: 0.6 }}
       >
         <motion.h2 
-          className="section-title"
+          className="section-title text-teal-300"
           {...fadeInUp}
         >
           Education
@@ -168,11 +171,9 @@ export default function About() {
             variants={fadeInUp}
             {...cardHoverSmall}
           >
-            <h3 className="text-xl font-semibold mb-2">Bachelor of Science in Computer Science</h3>
-            <p className="text-primary mb-2">University Name • 2014 - 2018</p>
-            <p className="text-secondary">
-              Graduated with honors. Focused on software engineering and web development.
-            </p>
+            <h3 className="text-xl font-semibold mb-2">Bachelor of Science in Statistics</h3>
+            <p className="text-primary mb-2">Micheal Okpara University of Agriculture - 2014 - 2018</p>
+            
           </motion.div>
         </motion.div>
       </motion.section>
