@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     const sessionId = userId || `guest_${req.headers.get("x-forwarded-for") || "anonymous"}`;
 
     const conversations = await prisma.conversation.findMany({
