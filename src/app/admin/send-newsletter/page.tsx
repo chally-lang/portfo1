@@ -1,6 +1,6 @@
 
 'use client'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { 
@@ -18,10 +18,7 @@ interface NewsletterSubscriber {
 
 export default function SendNewsletterPage() {
   const searchParams = useSearchParams()
-
-  const selectedIds = useMemo(() => {
-    return searchParams?.get('selected')?.split(',').filter(Boolean) || []
-  }, [searchParams])
+  const selectedIds = searchParams?.get('selected')?.split(',').filter(Boolean) || []
 
   const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([])
   const [selectedSubscribers, setSelectedSubscribers] = useState<NewsletterSubscriber[]>([])
@@ -35,18 +32,8 @@ export default function SendNewsletterPage() {
   const [content, setContent] = useState('')
   const [preview, setPreview] = useState(false)
 
-  useEffect(() => {
-    fetchSubscribers()
-  }, [])
-
-  useEffect(() => {
-    if (subscribers.length > 0 && selectedIds.length > 0) {
-      const selected = subscribers.filter(sub => selectedIds.includes(sub.id))
-      setSelectedSubscribers(selected)
-    }
-  }, [subscribers, selectedIds])
-
-  const fetchSubscribers = async () => {
+  // Wrap fetchSubscribers in useCallback to satisfy useEffect dependencies
+  const fetchSubscribers = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch('/api/admin/contact-messages')
@@ -60,7 +47,18 @@ export default function SendNewsletterPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    fetchSubscribers()
+  }, [fetchSubscribers])
+
+  useEffect(() => {
+    if (subscribers.length > 0 && selectedIds.length > 0) {
+      const selected = subscribers.filter(sub => selectedIds.includes(sub.id))
+      setSelectedSubscribers(selected)
+    }
+  }, [subscribers, selectedIds])
 
   const handleSendNewsletter = async () => {
     if (!subject.trim() || !content.trim()) {
@@ -246,7 +244,6 @@ export default function SendNewsletterPage() {
             </div>
           </motion.div>
 
-          {/* Preview */}
           {preview && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -337,7 +334,6 @@ export default function SendNewsletterPage() {
             </div>
           </motion.div>
 
-          {/* Newsletter Tips */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
