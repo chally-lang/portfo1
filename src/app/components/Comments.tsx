@@ -1,7 +1,7 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { UserIcon, CalendarIcon, PaperAirplaneIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import { useUser, SignInButton } from '@clerk/nextjs'
@@ -29,8 +29,8 @@ export default function Comments({ postId }: CommentsProps) {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const { isSignedIn, user } = useUser()
 
-  // Moved outside useEffect so it can be called anywhere
-  const fetchComments = async () => {
+  // Wrap fetchComments in useCallback to fix useEffect dependency warning
+  const fetchComments = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/comments?postId=${postId}`)
@@ -42,11 +42,11 @@ export default function Comments({ postId }: CommentsProps) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [postId])
 
   useEffect(() => {
     fetchComments()
-  }, [postId])
+  }, [fetchComments])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
