@@ -1,5 +1,6 @@
+
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { 
@@ -17,7 +18,10 @@ interface NewsletterSubscriber {
 
 export default function SendNewsletterPage() {
   const searchParams = useSearchParams()
-  const selectedIds = searchParams?.get('selected')?.split(',').filter(Boolean) || []
+
+  const selectedIds = useMemo(() => {
+    return searchParams?.get('selected')?.split(',').filter(Boolean) || []
+  }, [searchParams])
 
   const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([])
   const [selectedSubscribers, setSelectedSubscribers] = useState<NewsletterSubscriber[]>([])
