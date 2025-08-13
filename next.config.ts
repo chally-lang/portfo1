@@ -38,7 +38,7 @@ const nextConfig: NextConfig = {
   },
   // Optimize for Vercel deployment
   experimental: {
-    serverExternalPackages: ['@prisma/client'], // updated key name to fix warning
+    serverComponentsExternalPackages: ['@prisma/client'], // corrected key name
   },
   // Ensure proper handling of API routes
   pageExtensions: ['ts', 'tsx', 'js', 'jsx'],
