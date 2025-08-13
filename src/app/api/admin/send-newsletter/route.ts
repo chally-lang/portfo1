@@ -72,7 +72,8 @@ export async function POST(req: NextRequest) {
         return { email: subscriber.email, status: 'sent' };
       } catch (error) {
         console.error(`Failed to send email to ${subscriber.email}:`, error);
-        return { email: subscriber.email, status: 'failed', error: error.message };
+        const message = error instanceof Error ? error.message : String(error);
+        return { email: subscriber.email, status: 'failed', error: message };
       }
     });
 
