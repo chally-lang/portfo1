@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
@@ -44,29 +45,7 @@ export default function BlogPage() {
 
   const techTags = ['javascript', 'react', 'nextjs', 'typescript', 'ai', 'machine-learning', 'web-development', 'programming']
 
-  useEffect(() => {
-    fetchBlogPosts()
-  }, [])
-
-  useEffect(() => {
-    filterAndPaginatePosts()
-  }, [filterAndPaginatePosts])
-
-  const fetchBlogPosts = async () => {
-    try {
-      setLoading(true)
-      // Fetch all blogs without pagination limit
-      const response = await fetch('/api/blogs')
-      if (!response.ok) throw new Error('Failed to fetch blog posts')
-      const data = await response.json()
-      setAllPosts(data.posts)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  // ✅ Moved here before useEffect so it's defined when used in dependencies
   const filterAndPaginatePosts = useCallback(() => {
     let filtered = allPosts
 
@@ -91,6 +70,29 @@ export default function BlogPage() {
     const endIndex = startIndex + postsPerPage
     setPosts(filtered.slice(startIndex, endIndex))
   }, [allPosts, selectedTag, searchQuery, currentPage, postsPerPage])
+
+  useEffect(() => {
+    fetchBlogPosts()
+  }, [])
+
+  useEffect(() => {
+    filterAndPaginatePosts()
+  }, [filterAndPaginatePosts])
+
+  const fetchBlogPosts = async () => {
+    try {
+      setLoading(true)
+      // Fetch all blogs without pagination limit
+      const response = await fetch('/api/blogs')
+      if (!response.ok) throw new Error('Failed to fetch blog posts')
+      const data = await response.json()
+      setAllPosts(data.posts)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleTagChange = (tag: string) => {
     setSelectedTag(tag)
