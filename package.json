@@ -1,3 +1,4 @@
+
 {
   "name": "portfolio-project-2",
   "version": "0.1.0",
@@ -7,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync-embeddings": "node ./scripts/sync_embeddings.js"
+    "sync-embeddings": "node ./scripts/sync_embeddings.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.28.0",
