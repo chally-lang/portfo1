@@ -29,7 +29,7 @@ export default function Comments({ postId }: CommentsProps) {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const { isSignedIn, user } = useUser()
 
-  // Wrap fetchComments in useCallback to fix useEffect dependency warning
+  // useCallback to avoid re-creating fetchComments on every render
   const fetchComments = useCallback(async () => {
     try {
       setLoading(true)
@@ -50,7 +50,7 @@ export default function Comments({ postId }: CommentsProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!isSignedIn) {
       setMessage({ type: 'error', text: 'Please sign in to comment' })
       return
