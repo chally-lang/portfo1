@@ -1,3 +1,4 @@
+
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -37,7 +38,7 @@ const nextConfig: NextConfig = {
   },
   // Optimize for Vercel deployment
   experimental: {
-    serverComponentsExternalPackages: ['@prisma/client'],
+    serverExternalPackages: ['@prisma/client'], // updated key name to fix warning
   },
   // Ensure proper handling of API routes
   pageExtensions: ['ts', 'tsx', 'js', 'jsx'],
