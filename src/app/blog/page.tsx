@@ -107,14 +107,16 @@ export default function BlogPage() {
   const totalPages = Math.ceil(
     allPosts.filter(post => {
       if (selectedTag !== 'all') {
-        if (!post.tags?.some(tag => tag.toLowerCase().includes(selectedTag.toLowerCase()))) {
+        if (!Array.isArray(post.tags) || !post.tags.some(tag => tag.toLowerCase().includes(selectedTag.toLowerCase()))) {
           return false
         }
       }
       if (searchQuery.trim()) {
-        return post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-               post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-               post.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) || false
+        return (
+          post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (Array.isArray(post.tags) && post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
+        )
       }
       return true
     }).length / postsPerPage
