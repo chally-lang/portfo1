@@ -140,7 +140,7 @@ export default function Hero() {
           >
             {[
               { icon: FaGithub, href: "https://github.com/chally-lang", label: "GitHub" },
-              { icon: FaLinkedin, href: "https://www.linkedin.com/in/charles-chimaobi-ochiabuto-b27190177", label: "LinkedIn" },
+              { icon: FaLinkedin, href: "https://www.linkedin.com/in/charles-chimaobi-b27190177?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", label: "LinkedIn" },
               { icon: FaTwitter, href: "https://twitter.com", label: "Twitter" }
             ].map((social, index) => (
               <motion.a
