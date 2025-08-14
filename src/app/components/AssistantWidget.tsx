@@ -64,7 +64,7 @@ export default function AssistantWidget() {
       {open && (
         <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-white shadow-2xl rounded-lg flex flex-col z-50">
           <div className="bg-blue-600 text-white px-4 py-3 flex justify-between items-center rounded-t-lg">
-            <span className="font-semibold">Charles Assistant</span>
+            <span className="font-semibold">Charles AI Assistant</span>
             <button onClick={() => setOpen(false)} className="text-white hover:text-gray-200">
               ✖
             </button>
